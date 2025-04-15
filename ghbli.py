@@ -72,27 +72,29 @@ import numpy as np
 import cv2
 
 # Load the input image
-input_image_path = "nitya.jpg"
+input_image_path = "photo.jpg"
 input_image = cv2.imread(input_image_path)
 input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)
 input_image = cv2.resize(input_image, (256, 256))  # Resize for faster processing
 input_image = np.array(input_image) / 255.0  # Normalize to [0, 1]
 
-
-
-# Load a Ghibli-style reference image
+# Load the style image (Ghibli-style)
 style_image_path = "ghibli_style.jpg"
 style_image = cv2.imread(style_image_path)
 style_image = cv2.cvtColor(style_image, cv2.COLOR_BGR2RGB)
 style_image = cv2.resize(style_image, (256, 256))
 style_image = np.array(style_image) / 255.0
 
-# Apply style transfer
+# Convert to tensors and add batch dimension
 input_tensor = tf.convert_to_tensor(input_image, dtype=tf.float32)
 style_tensor = tf.convert_to_tensor(style_image, dtype=tf.float32)
 input_tensor = tf.expand_dims(input_tensor, axis=0)
 style_tensor = tf.expand_dims(style_tensor, axis=0)
 
+# Load the style transfer model from TensorFlow Hub
+model = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
+
+# Apply style transfer
 stylized_image = model(input_tensor, style_tensor)[0]
 stylized_image = tf.squeeze(stylized_image).numpy()
 
