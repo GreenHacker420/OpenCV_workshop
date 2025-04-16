@@ -1,346 +1,201 @@
-#pip install opencv-python opencv-contrib-python numpy pyautogui matplotlib scipy pillow cmake dlib 
-
-# import numpy as np
-# import cv2
-
-# # Create a blank 300x300 black image (3 channels for color)
-# image = np.zeros((300, 300, 3), dtype=np.uint8)
-
-# # Set specific pixel colors
-# image[50:100, 50:100] = [255, 0, 0]   # Blue square
-# image[100:150, 100:150] = [0, 255, 0] # Green square
-# image[150:200, 150:200] = [0, 0, 255] # Red square
-# image[200:250, 200:250] = [255, 255, 255] # White square
-
-# # Show the image
-# cv2.imshow("Image as Matrix", image)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-
-# Optional: Save the image
-# cv2.imwrite("color_blocks.png", image)
-
-
-# import numpy as np
-# import cv2
-
-# # Create a 400x400 black image with 3 channels (BGR)
-# image = np.zeros((400, 400, 3), dtype=np.uint8)
-
-# # Define block size and color mapping
-# block_size = 100
-# colors = {
-#     'Blue': (255, 0, 0),
-#     'Green': (0, 255, 0),
-#     'Red': (0, 0, 255),
-#     'White': (255, 255, 255)
-# }
-
-# # Draw 4 colored blocks with labels
-# positions = [(0, 0), (0, 100), (100, 0), (100, 100)]
-# color_names = list(colors.keys())
-
-# for (x, y), name in zip(positions, color_names):
-#     color = colors[name]
-#     cv2.rectangle(image, (x, y), (x + block_size, y + block_size), color, -1)
-#     cv2.putText(image, name, (x + 10, y + 60),
-#                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0) if name == "White" else (255, 255, 255), 2)
-
-# # Show image
-# cv2.imshow("Image Matrix Visualization", image)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-
-
-
-# import cv2
-# import numpy as np
-
-# # Create a black image of size 200x200 pixels
-# image = np.zeros((200, 200, 3), dtype=np.uint8)
-
-# # Add a blue square at top-left
-# image[0:100, 0:100] = [255, 0, 0]  # Blue in BGR
-
-# # Add a green square at top-right
-# image[0:100, 100:200] = [0, 255, 0]  # Green
-
-# # Add a red square at bottom-left
-# image[100:200, 0:100] = [0, 0, 255]  # Red
-
-# # Add a white square at bottom-right
-# image[100:200, 100:200] = [255, 255, 255]  # White
-
-# # Show the image
-# cv2.imshow("Color Blocks", image)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-
-
+"""
+Required dependencies
+python3 -m venv venv
+source venv/bin/activate
+brew install cmake
+pip install opencv-python opencv-contrib-python numpy pyautogui matplotlib scipy pillow cmake dlib
+"""
 
 import cv2
 import numpy as np
 
-# Create a black image of size 200x200 pixels
-image = np.zeros((200, 200, 3), dtype=np.uint8)
+def basic_image_creation():
+    """
+    Demonstrates basic image creation and manipulation.
+    Creates a 300x300 image with colored squares.
+    """
+    # Create a blank 300x300 black image (3 channels for color)
+    image = np.zeros((300, 300, 3), dtype=np.uint8)
 
-# Add colored squares
-image[0:100, 0:100] = [255, 0, 0]      # Blue
-image[0:100, 100:200] = [0, 255, 0]    # Green
-image[100:200, 0:100] = [0, 0, 255]    # Red
-image[100:200, 100:200] = [255, 255, 255]  # White
+    # Set specific pixel colors
+    image[50:100, 50:100] = [255, 0, 0]   # Blue square
+    image[100:150, 100:150] = [0, 255, 0] # Green square
+    image[150:200, 150:200] = [0, 0, 255] # Red square
+    image[200:250, 200:250] = [255, 255, 255] # White square
 
-# --- Draw over the image ---
+    # Show and save the image
+    cv2.imshow("Basic Image Creation", image)
+    cv2.waitKey(0)
+    cv2.imwrite("basic_image.png", image)
+    cv2.destroyAllWindows()
 
-# 1. Add rectangles inside each block (with padding)
-cv2.rectangle(image, (10, 10), (90, 90), (0, 0, 0), 2)           # Top-left (Blue)
-cv2.rectangle(image, (110, 10), (190, 90), (0, 0, 0), 2)         # Top-right (Green)
-cv2.rectangle(image, (10, 110), (90, 190), (255, 255, 255), 2)   # Bottom-left (Red)
-cv2.rectangle(image, (110, 110), (190, 190), (0, 0, 0), 2)       # Bottom-right (White)
+def color_blocks_with_labels():
+    """
+    Creates a 400x400 image with labeled color blocks.
+    Demonstrates text and shape drawing.
+    """
+    # Create a 400x400 black image with 3 channels (BGR)
+    image = np.zeros((400, 400, 3), dtype=np.uint8)
 
-# 2. Add center circle
-cv2.circle(image, (100, 100), 10, (255, 255, 0), -1)  # Yellow dot at center
+    # Define block size and color mapping
+    block_size = 100
+    colors = {
+        'Blue': (255, 0, 0),
+        'Green': (0, 255, 0),
+        'Red': (0, 0, 255),
+        'White': (255, 255, 255)
+    }
 
-# 3. Add cross lines (diagonals)
-# cv2.line(image, (0, 0), (200, 200), (255, 255, 0), 1)
-# cv2.line(image, (200, 0), (0, 200), (255, 255, 0), 1)
+    # Draw 4 colored blocks with labels
+    positions = [(0, 0), (0, 100), (100, 0), (100, 100)]
+    color_names = list(colors.keys())
 
-# 4. Add text labels to each block
-cv2.putText(image, "Blue", (10, 50), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 0.5, (0,0,0), 1)
-cv2.putText(image, "Green", (110, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1)
-cv2.putText(image, "Red", (10, 150), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255,255,255), 1)
-cv2.putText(image, "White", (110, 150), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1)
+    for (x, y), name in zip(positions, color_names):
+        color = colors[name]
+        cv2.rectangle(image, (x, y), (x + block_size, y + block_size), color, -1)
+        cv2.putText(image, name, (x + 10, y + 60),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0) if name == "White" else (255, 255, 255), 2)
 
-# Show the final image
-cv2.imshow("Annotated Blocks", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    # Show and save the image
+    cv2.imshow("Color Blocks with Labels", image)
+    cv2.waitKey(0)
+    cv2.imwrite("color_blocks.png", image)
+    cv2.destroyAllWindows()
 
-# # 1. Virtual Paint App (Mouse Drawing with Shape Options)
-# # Enhanced Virtual Paint App with UI, Shape Tools, Color Picker, Brush Size, and Preview
-# import cv2
-# import numpy as np
-# import pyautogui
+def resize_image(image, width=None, height=None, scale=None):
+    """
+    Resize an image while maintaining aspect ratio.
+    """
+    if scale is not None:
+        return cv2.resize(image, None, fx=scale, fy=scale)
+    
+    h, w = image.shape[:2]
+    if width is None and height is None:
+        return image
+    
+    if width is None:
+        ratio = height / h
+        dim = (int(w * ratio), height)
+    else:
+        ratio = width / w
+        dim = (width, int(h * ratio))
+    
+    return cv2.resize(image, dim)
 
-# # Get screen size dynamically
-# screen_width, screen_height = pyautogui.size()
+def convert_to_grayscale(image):
+    """
+    Convert image to grayscale.
+    """
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# # Constants
-# UI_HEIGHT = 50
-# CANVAS_WIDTH = screen_width
-# CANVAS_HEIGHT = screen_height - UI_HEIGHT
-# WINDOW_HEIGHT = CANVAS_HEIGHT + UI_HEIGHT
+def apply_blur(image, kernel_size=(5,5)):
+    """
+    Apply Gaussian blur to the image.
+    """
+    return cv2.GaussianBlur(image, kernel_size, 0)
 
-# # Canvas
-# paint_window = np.ones((WINDOW_HEIGHT, CANVAS_WIDTH, 3), dtype=np.uint8) * 255
+def detect_edges(image, threshold1=100, threshold2=200):
+    """
+    Detect edges using Canny edge detection.
+    """
+    return cv2.Canny(image, threshold1, threshold2)
 
-# # Drawing state
-# is_drawing = False
-# start_point = (-1, -1)
-# last_point = (-1, -1)
-# current_shape = 'circle'
-
-# # Drawing settings
-# circle_color = (0, 0, 255)
-# rectangle_color = (255, 0, 0)
-# line_color = (0, 255, 0)
-# freestyle_color = (0, 0, 0)
-# eraser_color = (255, 255, 255)
-# eraser_size = 15
-# freestyle_thickness = 2
-
-# # Color picker (preset colors)
-# colors = [(0, 0, 255), (0, 255, 0), (255, 0, 0), (0, 0, 0), (255, 255, 255)]
-# selected_color = freestyle_color
-
-
-# def create_ui_panel():
-#     button_width = CANVAS_WIDTH // 6
-#     paint_window[0:UI_HEIGHT, :] = (200, 200, 200)
-
-#     # Shape Buttons
-#     cv2.rectangle(paint_window, (0, 0), (button_width, UI_HEIGHT), (220, 220, 220), -1)
-#     cv2.putText(paint_window, "Circle", (10, UI_HEIGHT - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
-
-#     cv2.rectangle(paint_window, (button_width, 0), (button_width*2, UI_HEIGHT), (220, 220, 220), -1)
-#     cv2.putText(paint_window, "Rect", (button_width+10, UI_HEIGHT - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
-
-#     cv2.rectangle(paint_window, (button_width*2, 0), (button_width*3, UI_HEIGHT), (220, 220, 220), -1)
-#     cv2.putText(paint_window, "Line", (button_width*2+10, UI_HEIGHT - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
-
-#     cv2.rectangle(paint_window, (button_width*3, 0), (button_width*4, UI_HEIGHT), (220, 220, 220), -1)
-#     cv2.putText(paint_window, "Draw", (button_width*3+10, UI_HEIGHT - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
-
-#     cv2.rectangle(paint_window, (button_width*4, 0), (button_width*5, UI_HEIGHT), (220, 220, 220), -1)
-#     cv2.putText(paint_window, "Eraser", (button_width*4+10, UI_HEIGHT - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
-
-#     # Color Picker
-#     for i, color in enumerate(colors):
-#         x1 = button_width*5 + i*30
-#         x2 = x1 + 20
-#         cv2.rectangle(paint_window, (x1, 5), (x2, UI_HEIGHT-5), color, -1)
-#         if color == selected_color:
-#             cv2.rectangle(paint_window, (x1, 5), (x2, UI_HEIGHT-5), (0, 0, 0), 2)
-
-
-# def draw(event, x, y, flags, param):
-#     global is_drawing, start_point, last_point, current_shape, paint_window, selected_color, freestyle_thickness, eraser_size
-
-#     y_canvas = y - UI_HEIGHT
-#     if event == cv2.EVENT_LBUTTONDOWN:
-#         if y < UI_HEIGHT:
-#             button_width = CANVAS_WIDTH // 6
-#             if x < button_width:
-#                 current_shape = 'circle'
-#             elif x < button_width * 2:
-#                 current_shape = 'rectangle'
-#             elif x < button_width * 3:
-#                 current_shape = 'line'
-#             elif x < button_width * 4:
-#                 current_shape = 'freestyle'
-#             elif x < button_width * 5:
-#                 current_shape = 'eraser'
-#             else:
-#                 index = (x - button_width*5) // 30
-#                 if 0 <= index < len(colors):
-#                     selected_color = colors[index]
-#                     freestyle_color = selected_color
-#             create_ui_panel()
-#             return
-
-#         is_drawing = True
-#         start_point = (x, y_canvas)
-#         last_point = (x, y_canvas)
-
-#     elif event == cv2.EVENT_MOUSEMOVE and is_drawing:
-#         temp_window = paint_window.copy()
-#         current_point = (x, y_canvas)
-
-#         if current_shape == 'circle':
-#             radius = int(np.linalg.norm(np.array(start_point) - np.array(current_point)))
-#             cv2.circle(temp_window[UI_HEIGHT:], start_point, radius, selected_color, -1)
-
-#         elif current_shape == 'rectangle':
-#             cv2.rectangle(temp_window[UI_HEIGHT:], start_point, current_point, selected_color, 2)
-
-#         elif current_shape == 'line':
-#             cv2.line(temp_window[UI_HEIGHT:], start_point, current_point, selected_color, 2)
-
-#         elif current_shape == 'freestyle':
-#             cv2.line(paint_window[UI_HEIGHT:], last_point, current_point, freestyle_color, freestyle_thickness)
-#             last_point = current_point
-#             temp_window = paint_window.copy()
-
-#         elif current_shape == 'eraser':
-#             cv2.circle(paint_window[UI_HEIGHT:], current_point, eraser_size, eraser_color, -1)
-#             temp_window = paint_window.copy()
-#             cv2.circle(temp_window[UI_HEIGHT:], current_point, eraser_size, (200, 200, 200), 1)
-
-#         cv2.imshow("Paint", temp_window)
-
-#     elif event == cv2.EVENT_LBUTTONUP and is_drawing:
-#         is_drawing = False
-#         end_point = (x, y_canvas)
-#         if current_shape == 'circle':
-#             radius = int(np.linalg.norm(np.array(start_point) - np.array(end_point)))
-#             cv2.circle(paint_window[UI_HEIGHT:], start_point, radius, selected_color, -1)
-#         elif current_shape == 'rectangle':
-#             cv2.rectangle(paint_window[UI_HEIGHT:], start_point, end_point, selected_color, 2)
-#         elif current_shape == 'line':
-#             cv2.line(paint_window[UI_HEIGHT:], start_point, end_point, selected_color, 2)
-
-
-# # Setup
-# cv2.namedWindow("Paint", cv2.WINDOW_NORMAL)
-# cv2.resizeWindow("Paint", CANVAS_WIDTH, WINDOW_HEIGHT)
-# create_ui_panel()
-# cv2.setMouseCallback("Paint", draw)
-
-# print("Controls: 'c'=circle, 'r'=rectangle, 'l'=line, 'f'=freestyle, 'e'=eraser, '+'/'-'=brush size, 's'=save, 'q'=quit")
-
-# while True:
-#     cv2.imshow("Paint", paint_window)
-#     key = cv2.waitKey(1) & 0xFF
-#     if key == ord('q'):
-#         break
-#     elif key == ord('c'):
-#         current_shape = 'circle'
-#     elif key == ord('r'):
-#         current_shape = 'rectangle'
-#     elif key == ord('l'):
-#         current_shape = 'line'
-#     elif key == ord('f'):
-#         current_shape = 'freestyle'
-#     elif key == ord('e'):
-#         current_shape = 'eraser'
-#     elif key == ord('+'):
-#         freestyle_thickness = min(freestyle_thickness + 1, 20)
-#         eraser_size = min(eraser_size + 1, 50)
-#     elif key == ord('-'):
-#         freestyle_thickness = max(freestyle_thickness - 1, 1)
-#         eraser_size = max(eraser_size - 1, 5)
-#     elif key == ord('s'):
-#         cv2.imwrite("drawing_output.png", paint_window[UI_HEIGHT:])
-#         print("Saved as drawing_output.png")
-#     create_ui_panel()
-
-# cv2.destroyAllWindows()
+def apply_threshold(image, threshold=127, max_value=255, type=cv2.THRESH_BINARY):
+    """
+    Apply thresholding to the image.
+    """
+    return cv2.threshold(image, threshold, max_value, type)[1]
 
 
 
 
+def image_processing_demo(image_path):
+    """
+    Demonstrates various image processing operations.
+    """
+    # Read image
+    image = cv2.imread(image_path)
+    if image is None:
+        print(f"Error: Could not read image at {image_path}")
+        return None
 
+    # Get image properties
+    print("\nImage Properties:")
+    print(f"Shape: {image.shape}")
+    print(f"Size: {image.size}")
+    print(f"Data Type: {image.dtype}")
 
+    # Apply various image processing operations
+    processed_images = {
+        'Original': image,
+        'Resized (50%)': resize_image(image, scale=0.5),
+        'Grayscale': convert_to_grayscale(image),
+        'Blurred': apply_blur(image),
+        'Edges': detect_edges(image),
+        'Threshold': apply_threshold(convert_to_grayscale(image))
+    }
 
-# import cv2 as cv
-# import numpy as np
+    # Display all processed images
+    for title, img in processed_images.items():
+        cv2.imshow(title, img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
-# image = cv.imread('logo.jpg')
-# print(image)
-# print("Shape",image.shape)
-# print("Size",image.size)
-# print("Data Type",image.dtype)
+    return processed_images
 
-# resized_image = cv.resize(image , (200 , 200))
-# print()
-# grayscale_image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-# gaussian_blurred_image = cv.GaussianBlur(image, (15, 15), 0)
-# edges = cv.Canny(image, 100, 200)
+def camera_feed_demo():
+    """
+    Demonstrates real-time camera feed processing.
+    """
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        print("Error: Could not open camera.")
+        return
 
+    print("\nCamera Feed Demo")
+    print("Press 'q' to quit")
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Error: Could not read frame.")
+            break
 
+        # Display original and processed frames
+        cv2.imshow('Webcam Feed', frame)
 
-# while True:
-#     # Display the image
-#     cv.imshow('Original Image', image)
+        # Break the loop on 'q' key press
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
-#     # Wait for a key press
-#     key = cv.waitKey(1) & 0xFF
+    cap.release()
+    cv2.destroyAllWindows()
 
-#     # If 'q' is pressed, exit the loop
-#     if key == ord('q'):
-#         break
+def main():
+    """
+    Main function to run all demonstrations.
+    """
+    print("OpenCV Demonstrations")
+    print("====================")
+    
+    # 1. Basic Image Creation
+    print("\n1. Basic Image Creation Demo")
+    basic_image_creation()
 
+    # 2. Color Blocks with Labels
+    print("\n2. Color Blocks with Labels Demo")
+    color_blocks_with_labels()
 
-# while True:
-#     #using video capture
-#     cap = cv.VideoCapture(0)
-#     # Check if the camera opened successfully
-#     if not cap.isOpened():
-#         print("Error: Could not open camera.")
-#         break
-#     # Read a frame from the camera
-#     ret, frame = cap.read()
-#     # Check if the frame was read successfully
-#     if not ret:
-#         print("Error: Could not read frame.")
-#         break
-#     # Display the frame
-#     cv.imshow('Camera Feed', frame)
+    # 3. Image Processing
+    print("\n3. Image Processing Demo")
+    image_path = 'photo.jpg'  # Replace with your image path
+    processed_images = image_processing_demo(image_path)
 
-#     # Wait for a key press
-#     key = cv.waitKey(1) & 0xFF
-#     # If 'q' is pressed, exit the loop
-#     if key == ord('q'):
-#         break
-# # Release the camera and close all OpenCV windows
-# cap.release()
+    # 4. Camera Feed
+    print("\n4. Camera Feed Demo")
+    camera_feed_demo()
+
+    print("\nAll demonstrations completed!")
+
+if __name__ == "__main__":
+    main()
